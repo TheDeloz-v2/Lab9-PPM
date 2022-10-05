@@ -71,10 +71,6 @@ class GameFragment : Fragment() {
         binding.skip.setOnClickListener { onSkipWord() }
     }
 
-    /*
-    * Checks the user's word, and updates the score accordingly.
-    * Displays the next scrambled word.
-    */
     private fun onSubmitWord() {
 
         val playerWord = binding.textInputEditText.text.toString()
@@ -89,10 +85,6 @@ class GameFragment : Fragment() {
         }
     }
 
-    /*
-     * Skips the current word without changing the score.
-     * Increases the word count.
-     */
     private fun onSkipWord() {
         if (viewModel.nextWord()) {
             setErrorTextField(false)
@@ -102,35 +94,16 @@ class GameFragment : Fragment() {
         }
     }
 
-    /*
-     * Gets a random word for the list of words and shuffles the letters in it.
-     */
-    private fun getNextScrambledWord(): String {
-        val tempWord = allWordsList.random().toCharArray()
-        tempWord.shuffle()
-        return String(tempWord)
-    }
-
-    /*
-     * Re-initializes the data in the ViewModel and updates the views with the new data, to
-     * restart the game.
-     */
     private fun restartGame() {
         viewModel.reinitializeData()
         setErrorTextField(false)
 
     }
 
-    /*
-     * Exits the game.
-     */
     private fun exitGame() {
         activity?.finish()
     }
 
-    /*
-    * Sets and resets the text field error status.
-    */
     private fun setErrorTextField(error: Boolean) {
         if (error) {
             binding.textField.isErrorEnabled = true
@@ -155,8 +128,4 @@ class GameFragment : Fragment() {
             .show()
     }
 
-        override fun onDetach() {
-        super.onDetach()
-        Log.d("GameFragment", "GameFragment destroyed!")
-    }
 }
