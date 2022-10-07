@@ -26,8 +26,6 @@ import androidx.fragment.app.activityViewModels
 import com.example.cupcake.databinding.FragmentStartBinding
 import androidx.navigation.fragment.findNavController
 import androidx.fragment.app.activityViewModels
-import com.example.cupcake.model.OrderViewModel
-
 
 /**
  * This is the first screen of the Cupcake app. The user can choose how many cupcakes to order.
@@ -62,6 +60,10 @@ class StartFragment : Fragment() {
     }
 
     fun orderCupcake(quantity: Int) {
+        sharedViewModel.setQuantity(quantity)
+        if (sharedViewModel.hasNoFlavorSet()) {
+            sharedViewModel.setFlavor(getString(R.string.vanilla))
+        }
         findNavController().navigate(R.id.action_startFragment_to_flavorFragment)
     }
 
