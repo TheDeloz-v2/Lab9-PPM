@@ -24,6 +24,10 @@
         <variable
             name="viewModel"
             type="com.example.cupcake.model.OrderViewModel" />
+        <variable
+            name="pickupFragment"
+            type="com.example.cupcake.PickupFragment" />
+
     </data>
 
     <ScrollView
@@ -93,6 +97,7 @@
 
             <TextView
                 android:id="@+id/subtotal"
+                android:text="@{@string/subtotal_price(viewModel.price)}"
                 style="@style/Widget.Cupcake.TextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -102,7 +107,21 @@
                 tools:text="Subtotal $5.00" />
 
             <Button
+                android:id="@+id/cancel_button"
+                android:onClick="@{() -> pickupFragment.cancelOrder()}"
+                style="?attr/materialButtonOutlinedStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/side_margin"
+                android:text="@string/cancel"
+                app:layout_constraintEnd_toStartOf="@id/next_button"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/next_button" />
+
+            <Button
                 android:id="@+id/next_button"
+                app:layout_constraintStart_toEndOf="@id/cancel_button"
+                android:onClick="@{() -> pickupFragment.goToNextScreen()}"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/side_margin"
