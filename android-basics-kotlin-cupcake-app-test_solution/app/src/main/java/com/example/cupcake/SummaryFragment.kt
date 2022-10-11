@@ -59,7 +59,11 @@ class SummaryFragment : Fragment() {
         }
     }
 
+    /**
+     * Submit the order by sharing out the order details to another app via an implicit intent.
+     */
     fun sendOrder() {
+        // Construct the order summary text with information from the view model
         val numberOfCupcakes = sharedViewModel.quantity.value ?: 0
         val orderSummary = getString(
             R.string.order_details,
@@ -69,12 +73,16 @@ class SummaryFragment : Fragment() {
             sharedViewModel.price.value.toString()
         )
 
+        // Create an ACTION_SEND implicit intent with order details in the intent extras
         val intent = Intent(Intent.ACTION_SEND)
             .setType("text/plain")
             .putExtra(Intent.EXTRA_SUBJECT, getString(R.string.new_cupcake_order))
             .putExtra(Intent.EXTRA_TEXT, orderSummary)
 
+        // Check if there's an app that can handle this intent before launching it
         if (activity?.packageManager?.resolveActivity(intent, 0) != null) {
+            // Start a new activity with the given intent (this may open the share dialog on a
+            // device if multiple apps can handle this intent)
             startActivity(intent)
         }
     }

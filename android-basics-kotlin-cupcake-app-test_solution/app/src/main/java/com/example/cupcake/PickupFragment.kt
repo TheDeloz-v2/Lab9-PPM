@@ -21,8 +21,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import com.example.cupcake.databinding.FragmentPickupBinding
 import androidx.navigation.fragment.findNavController
+import com.example.cupcake.databinding.FragmentPickupBinding
 import com.example.cupcake.model.OrderViewModel
 
 /**
@@ -35,6 +35,7 @@ class PickupFragment : Fragment() {
     // when the view hierarchy is attached to the fragment.
     private var binding: FragmentPickupBinding? = null
 
+    // Use the 'by activityViewModels()' Kotlin property delegate from the fragment-ktx artifact
     private val sharedViewModel: OrderViewModel by activityViewModels()
 
     override fun onCreateView(
@@ -56,8 +57,22 @@ class PickupFragment : Fragment() {
         }
     }
 
+    /**
+     * Navigate to the next screen to see the order summary.
+     */
     fun goToNextScreen() {
         findNavController().navigate(R.id.action_pickupFragment_to_summaryFragment)
+    }
+
+    /**
+     * Cancel the order and start over.
+     */
+    fun cancelOrder() {
+        // Reset order in view model
+        sharedViewModel.resetOrder()
+
+        // Navigate back to the [StartFragment] to start over
+        findNavController().navigate(R.id.action_pickupFragment_to_startFragment)
     }
 
     /**
@@ -68,10 +83,4 @@ class PickupFragment : Fragment() {
         super.onDestroyView()
         binding = null
     }
-
-    fun cancelOrder() {
-        sharedViewModel.resetOrder()
-        findNavController().navigate(R.id.action_pickupFragment_to_startFragment)
-    }
-
 }
